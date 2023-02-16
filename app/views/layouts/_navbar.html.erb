@@ -1,0 +1,50 @@
+<% if user_signed_in? %>
+
+<ul class="nav flex-column">
+ <li class="nav-item">
+    <a class="nav-link disabled" href="home/index">
+    <%= image_tag("contentgram-logo.png",class: 'rounded-cirlce',style: 'width:12vw') %>
+    </a>
+  </li> 
+  <li class="nav-item">
+    <a class='nav-link' href='#' >
+    
+        <%= "Welcome!! "+ current_user.username %>
+        <% if current_user.avatar.attached? %>
+            <%= image_tag(current_user.avatar,class:'rounded-circle', style: "width:5vh") %>
+        <% end %>
+
+        <%
+=begin%>
+ special for byjuites 
+<%
+=end%>
+        <% if current_user.email.match(/byjus.com$/) %>
+          <%= image_tag('crown.png',style:"width:2vw") %>
+        <% end %>
+    </a>
+  </li>
+  <%= form_with url: profiles_index_path, method: :get do |form| %>
+    <%= form.search_field :query, value: params[:query], placeholder: "Search", class:"search-field" %>
+    </br>
+    <%= form.submit "Search", class:"btn btn-primary" %>
+  <% end %>
+  
+  <li class="nav-item">
+    <%= link_to "Home",posts_path, class: "nav-link" %>  
+  </li>
+ 
+  <li class="nav-item">
+          <%= link_to "View my profile", current_user, class:"nav-link"%>
+        </li>
+  <li class="nav-item">
+        <%= link_to "Upload Post", new_post_path, class: "nav-link" %>
+      </li>
+      
+  
+   <li class="nav-item">
+    <%= button_to "Log Out", destroy_user_session_path, class: "nav-link btn ",style:"border:0px; background-color:white;",method: :delete %>
+  </li>
+
+</ul>
+<% end %>
